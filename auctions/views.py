@@ -44,10 +44,6 @@ def login_view(request):
             return render(request, "auctions/login.html", {
                 "message": "Invalid username and/or password."
             })
-    else:
-        if request.user.is_authenticated:
-            return redirect('index')
-        return render(request, "auctions/login.html")
 
 
 def logout_view(request):
@@ -71,7 +67,6 @@ def register(request):
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
-            personal_watchlist = PersonalWatchlist.objects.create(user=user)
             user.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {
@@ -96,13 +91,13 @@ def add_auction(request):
     if request.method == 'GET':
         context = {
             'form': AuctionForm(),
-            'totalAuctions': totalAuctions,
+            'total': total,
             'persons': persons,
         }
 
         return render(request, "auctions/add_auctions.html", context)
     else:
-        form = AuctionForm(request.POST, request.FILES)
+        form = CostForm(request.POST, request.FILES)
 
         if form.is_valid():
             title = form.cleaned_data['title']
