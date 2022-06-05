@@ -91,7 +91,7 @@ def add_auction(request):
     if user.id is None:
         return redirect('login')
     my_watchlist = PersonalWatchlist.objects.get(user=request.user)
-    totalAuctions = my_watchlist.auctions.count()
+    watch = my_watchlist.auctions.count()
 
     if request.method == 'GET':
         context = {
