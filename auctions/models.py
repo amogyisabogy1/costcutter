@@ -14,22 +14,22 @@ class Category(models.Model):
         return self.name
 
 
-class Auction(models.Model):
+class Cost(models.Model):
     user = models.ForeignKey(
-        'User', on_delete=models.CASCADE, related_name='user_who_make_the_auction')
+        'User', on_delete=models.CASCADE, related_name='user_who_makes_the_cost')
     title = models.CharField(max_length=100)
     description = models.TextField()
     person = models.ForeignKey(
         'Person', on_delete=models.CASCADE, related_name='person_to_use', default=1)
     category = models.ForeignKey(
-        'Category', on_delete=models.CASCADE, related_name='category_for_the_auction', default=3)
+        'Category', on_delete=models.CASCADE, related_name='category_for_the_cost', default=3)
     Costs = models.CharField(max_length=140, default="0$")
     comments = models.ManyToManyField(
-        'Comment', related_name='comments_in_the_auction', blank=True)
+        'Comment', related_name='comments_in_the_cost', blank=True)
     bids = models.ManyToManyField(
-        'Bid', related_name='bids_in_the_auction', blank=True)
+        'Bid', related_name='bids_in_the_cost', blank=True)
     last_bid = models.ForeignKey('Bid', on_delete=models.CASCADE,
-                                 related_name='last_bid_for_the_auction', blank=True, null=True)
+                                 related_name='last_bid_for_the_cost', blank=True, null=True)
     date = models.DateTimeField(default=timezone.now)
     receipt = models.ImageField(upload_to='images', blank=True, null=True)
     closed = models.BooleanField(default=False)
