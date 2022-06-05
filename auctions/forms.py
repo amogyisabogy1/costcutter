@@ -2,7 +2,7 @@ from django import forms
 from .models import Category, Auction, Person
 
 
-class AuctionForm(forms.ModelForm):
+class CostsForm(forms.ModelForm):
 
     class Meta:
         model = Auction
